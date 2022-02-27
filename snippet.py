@@ -1,14 +1,14 @@
 from azure.cognitiveservices.vision.computervision import ComputerVisionClient
-from azure.cognitiveservices.vision.computervision.models import OperationStatusCodes
-from azure.cognitiveservices.vision.computervision.models import VisualFeatureTypes
+# from azure.cognitiveservices.vision.computervision.models import OperationStatusCodes
+# from azure.cognitiveservices.vision.computervision.models import VisualFeatureTypes
 from msrest.authentication import CognitiveServicesCredentials
 
 from dotenv import load_dotenv
-from array import array
+# from array import array
 import os
-from PIL import Image
-import sys
-import time
+# from PIL import Image
+# import sys
+# import time
 
 load_dotenv()
 
@@ -19,16 +19,17 @@ computervision_client = ComputerVisionClient(
     endpoint, CognitiveServicesCredentials(subscription_key)
 )
 
-remote_image_url = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files/master/ComputerVision/Images/landmark.jpg"
+# remote_image_url = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files/master/ComputerVision/Images/landmark.jpg"
 # remote_image_url = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files/master/ComputerVision/Images/celebrities.jpg"
 
 
-def describe_image(remote_image_url: str):
+def describe_image():
     """
     Describe an Image - remote
     This example describes the contents of an image with the confidence score.
     """
     print("===== Describe an image - remote =====")
+    remote_image_url = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files/master/ComputerVision/Images/landmark.jpg"
     # Call API
     description_results = computervision_client.describe_image(remote_image_url)
 
@@ -45,12 +46,13 @@ def describe_image(remote_image_url: str):
             )
 
 
-def get_image_categorize(remote_image_url: str):
+def get_image_categorize():
     """
     Categorize an Image - remote
     This example extracts (general) categories from a remote image with a confidence score.
     """
     print("===== Categorize an image - remote =====")
+    remote_image_url = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files/master/ComputerVision/Images/landmark.jpg"
     # Select the visual feature(s) you want.
     remote_image_features = ["categories"]
     # Call API with URL and features
@@ -96,7 +98,7 @@ def find_faces():
     """
     print("===== Detect Domain-specific Content - remote =====")
     # URL of one or more celebrities
-    remote_image_url_celebs = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files/master/ComputerVision/Images/faces.jpg"
+    remote_image_url_celebs = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files/master/ComputerVision/Images/celebrities.jpg"
     # Call API with content type (celebrities) and URL
     detect_domain_results_celebs_remote = computervision_client.analyze_image_by_domain(
         "celebrities", remote_image_url_celebs
@@ -117,14 +119,25 @@ def get_user_choice():
         "get_image_tags",
         "describe_image",
         "get_image_categorize",
-        ]
-    for index, item in enumerate(computer_vision_example_list):
+    ]
+    print("/n/n/nChoose from the below")
+    for index, item in enumerate(computer_vision_example_list, start=1):
         print(f"{index} - {item}")
-    
-    user_input = input("Enter your choice: ")
 
-    if user_input not in computer_vision_example_list:
+    user_input = int(input("\n\nEnter your choice (int): "))
+
+    if user_input not in list(range(len(computer_vision_example_list))):
         exit("Choose from the provided list")
-        
-    
-        
+
+    func_name = computer_vision_example_list[user_input - 1]
+
+    # get the function object from the global
+    callable_func_name = globals()[func_name]
+
+    # call teh desired function
+    callable_func_name()
+
+
+get_user_choice()
+
+print("\n\n\n\n")
