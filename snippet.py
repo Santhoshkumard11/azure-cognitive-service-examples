@@ -1,11 +1,14 @@
 from azure.cognitiveservices.vision.computervision import ComputerVisionClient
+
 # from azure.cognitiveservices.vision.computervision.models import OperationStatusCodes
 # from azure.cognitiveservices.vision.computervision.models import VisualFeatureTypes
 from msrest.authentication import CognitiveServicesCredentials
 
 from dotenv import load_dotenv
+
 # from array import array
 import os
+
 # from PIL import Image
 # import sys
 # import time
@@ -79,6 +82,7 @@ def get_image_tags():
     This example returns a tag (key word) for each thing in the image.
     """
     print("===== Tag an image - remote =====")
+    remote_image_url = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files/master/ComputerVision/Images/landmark.jpg"
     # Call API with remote image
     tags_result_remote = computervision_client.tag_image(remote_image_url)
 
