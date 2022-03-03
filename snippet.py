@@ -124,7 +124,7 @@ def get_user_choice():
         "describe_image",
         "get_image_categorize",
     ]
-    print("/n/n/nChoose from the below")
+    print("\n\n\nChoose from the below")
     for index, item in enumerate(computer_vision_example_list, start=1):
         print(f"{index} - {item}")
 
